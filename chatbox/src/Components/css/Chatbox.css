@@ -1,0 +1,86 @@
+.chats-components{
+          width:100%;
+          height:100%;
+          display:flex;
+          flex-direction: column;
+
+}
+.chats-components .title-bar{
+          width:100%;
+          padding:10px;
+          display:flex;
+          justify-content: space-between;
+          background-color: rgb(4, 66, 107);
+}
+.chats-components .title-bar span{
+          color:white;
+          font-size: 20px;
+}
+.chats-components .message-bar{
+          width:100%;
+          padding:10px;
+          display:flex;
+          justify-content: center;
+          background-color: rgb(4, 66, 107);
+          align-items: center;
+
+}
+.chats-components .message-bar form{
+          width:80%;
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 0px;
+}
+.chats-components .message-bar form input{
+          width: 60%;
+          border: none;
+          outline: none;
+          background-color: white;
+          border-radius: 10px;
+          padding:0px 10px;
+          color:black;
+          font-size: 20px;
+}
+.chats-components .message-bar form button{
+          border-radius: 50%;
+          border: none;
+
+}
+.chats-components .message-bar form button i{
+          font-size: 20px;
+          padding:10px;
+          border-radius: 50%;
+          color: black;
+          background-color: white;
+}
+.chats-components .chats{
+          width:100%;
+          background: none;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          overflow-y: scroll;
+
+}
+.chats-components .chats::-webkit-scrollbar{
+          display: none;
+}
+.chats-components .chats span.left{
+          width: 40%;
+          padding: 0px 10px;
+          margin: 10px 0px ;
+          margin-right: 60%;
+          
+       
+          
+
+}
+.chats-components .chats span.right{
+          width: 40%;
+          
+          margin: 10px 0px ;
+          margin-left: 60%;
+          padding: 0px 10px;
+         
+
+}

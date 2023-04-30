@@ -1,0 +1,294 @@
+*{
+  padding:0px;
+  margin:0px;
+  box-sizing: border-box;
+
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+html{
+  font-size: 62.5%;
+  font-family: sans-serif;
+}
+
+.App{
+  width:100%;
+  height:100vh;
+  display:flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+.App .details-box{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+
+
+}
+.App .details-box.none{
+  display:none;
+}
+
+.App .details-box nav{
+  width:100%;
+  height:5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:10px;
+  background-color:rgb(66, 13, 163) ;
+  
+
+  
+}
+.App .details-box nav span.logo{
+  font-size: 30px;
+  color:white;
+  padding:10px;
+  border-radius: 5px;
+ 
+}
+.App .details-box nav div.navbuttons{
+  color:white;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.App .details-box nav div.navbuttons .newchatadd input{
+  width:200px;
+  height: 25px;
+  padding:0px 10px;
+  color:white;
+  background: none;
+  border: none;
+  border-bottom: 2px solid white;
+  
+  outline: none;
+  font-size: 15px;
+  
+  transition: 0.3s ease;
+  margin: 0px 10px;
+  animation: inputani 0.3s ease;
+  
+}
+@keyframes inputani {
+  0%{
+    width: 0px;
+  }
+  100%{
+    width: 200px;
+  }
+  
+}
+.App .details-box nav div.navbuttons .newchatadd input:hover{
+  background-color: rgb(89, 57, 175);
+}
+.App .details-box nav div.navbuttons .newchatadd button{
+  font-size: 20px;
+  background:none;
+  color:rgb(250, 249, 249);
+  border:none;
+  outline: none;
+  font-weight: 600;
+  
+
+}
+.App .details-box nav div.navbuttons p{
+  margin:0px 10px;
+}
+/* .App .details-box nav div.navbuttons p.signout{
+  background-color: rgb(3, 3, 3);
+  
+
+  
+} */
+
+.App .details-box .details{
+  width:100%;
+  height:95%;
+  display:flex;
+  justify-content: center;
+ 
+}
+.App .details-box .details div.signin-addname{
+  width:40%;
+  height:auto;
+ 
+  display:flex;
+  justify-content: center;
+  align-items: center;
+ 
+
+}
+.App .details-box .details div.chatdetails{
+  width:100%;
+  height:100%;
+  background-color: rgb(3, 3, 3);
+  display:flex;
+  flex-direction: column;
+}
+.App .details-box .details div.chatdetails span{
+  font-size: 20px;
+  background-color: rgb(96, 13, 190);
+  padding:10px;
+  color:white;
+  border-radius: 5px;
+  width: 50%;
+  margin:10px 10px;
+
+}
+.App .details-box .details div.signin-addname span.signin{
+  width:50%;
+  height:auto;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.App .details-box .details div.signin-addname span.signin form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.App .details-box .details div.signin-addname span.signin form input{
+  width:100%;
+  height:40px;
+  background-color: black;
+  border:none;
+  outline: none;
+  
+  color:grey;
+  font-size: 20px;
+  margin: 10px 0px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  padding:0px 10px;
+}
+.App .details-box .details div.signin-addname span.signin form input:hover{
+  background-color: rgb(29, 28, 28);
+  color:white
+}
+.App .details-box .details div.signin-addname span.signin form input::placeholder{
+  font-size: 20px;
+}
+.App .details-box .details div.signin-addname span.signin form button{
+  border:none;
+  color:white;
+  background-color: rgb(66, 13, 163);
+  font-size: 25px;
+  border-radius: 5px;
+  margin:10px 0px;
+  padding:10px;
+
+}
+.App .details-box .details div.signin-addname span.signin form button:hover{
+  background-color: rgb(98, 38, 211);
+  transform: scale(1.1);
+
+}
+.App .chatbox{
+  width:0%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  background-image: url('./Components/css/peakpx\ \(1\).jpg');
+  background-size: contain;
+  background-attachment: fixed;
+}
+.App .chatbox.width{
+  width:50%;
+}
+.App .details-box.width{
+  width:50%
+
+}
+.App .chatbox .chatroommessage{
+  width:100%;
+  flex:1;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color:grey;
+  background-color: rgb(4, 66, 107);
+  font-size: 40px;
+  padding: 10px;
+  flex-direction: column;
+}
+.App .chatbox .chatroommessage p.b{
+  font-size: 60px;
+  font-weight: 600;
+}
+.App .chatbox .chats{
+  width:100%;
+  flex:1;
+  height: auto;
+  
+}
+.App .chatbox .top-chat-bar{
+  width: 100%;
+  padding: 5px;
+  font-size: 10px;
+  color: grey;
+  background-color: rgb(4, 66, 107);
+  display: none;
+}
+
+
+/* media queries */
+
+@media (max-width:500px) {
+  .App .details-box nav span.logo{
+    font-size: 20px;
+  }
+  .App .details-box nav div.navbuttons{
+    font-size: 15px;
+
+  }
+  .App .chatbox.width{
+    width:100%;
+    position: relative;
+    z-index: 1;
+
+  }
+  .App .details-box.width{
+    width:100%;
+    position: absolute;
+    top:0%;
+    left:0%;
+    z-index: 2;
+
+  }
+  .App .chatbox .top-chat-bar{
+    display: flex;
+  }
+  
+ 
+  .App .details-box .details div.chatdetails span{
+    width:100%;
+    background-color: rgb(27, 26, 26);
+    box-shadow: 0px 2px 4px 0px rgb(96, 13, 190);
+    margin: 5px auto;
+    
+
+  }
+  .App .details-box nav div.navbuttons .newchatadd input{
+    width: 100px;
+    border-bottom: 1px solid grey;
+  }
+  .App .details-box nav div.navbuttons .newchatadd button{
+    font-size: 10px;
+    color: grey;
+  }
+  .App .details-box .details div.signin-addname{
+    width:100%;
+  }
+}

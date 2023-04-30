@@ -1,0 +1,20 @@
+.message-body-main{
+          width:100%;
+          display: flex;
+          flex-direction: column;
+}
+.message-body-main .message-body{
+          width:100%;
+          padding:10px;
+          background-color: white;
+          color:black;
+          font-size: 20px;
+          border-radius: 5px;
+}
+.message-body-main .time{
+          width:100%;
+          padding:10px;
+          font-size: 15px;
+          background: none;
+          color: white;
+}
