@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './css/Chatbox.css'
 import Messagebody from './Messagebody'
 import $ from 'jquery'
 import "jquery-ui-dist/jquery-ui";
-import {  db } from '../config'
-import { addDoc, getDocs, collection,query,where } from 'firebase/firestore';
+import { db } from '../config'
+import axios from 'axios'
+import Cookies from 'universal-cookie'
+import { addDoc, getDocs, collection, query, where,orderBy ,onSnapshot } from 'firebase/firestore';
+import sound from './css/Whatsapp Message - Sent - Sound.mp3'
 
-function Chatbox({ room, name,account }) {
+function Chatbox({ room, name, account }) {
+  const [filterchat, setfilterchat] = useState([])
+  const[relaod,setreload]=useState(false)
+  const[audio,setaudio]= useState({
+    ting:new Audio(sound)
+  })
+  const messagesEndRef = useRef(null)
 
-  // collectio references
+  const useChatref = collection(db, 'Chats')
 
-  const useChatref = collection(db,'Chats')
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [room,relaod]);
 
 
 
@@ -18,51 +33,73 @@ function Chatbox({ room, name,account }) {
 
 
   // all usefull states
-  
 
-  const [list, setlist] = useState({  roomid:"",
-    message:"",
+
+  const [list, setlist] = useState({
+    roomid: "",
+    message: "",
     time: "",
-    sender:""})
+    sender: ""
+  })
 
 
-  const [filterchat, setfilterchat] = useState([])
-
-
-
-
-
-
-
-
-
-
-// getchats external function to get fetch dta from db
-const getchats = async()=>{
   
-  const chatQuery = await query(useChatref,where('roomid','==',room))
-  await getDocs(chatQuery).then((res)=>{
-    res.forEach((doc)=>{
-      var data={...doc.data(),id:doc.id}
-      setfilterchat(e=>({...e,data}))
-    })
+
+
+
+  //------------------------------------------- sorting function------------------------------------------//
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  // getchats external function to get fetch dta from db
+  
+
    
 
 
-  })
-
-}
 
 
 
 
 
-// useeffects
+  // useeffects
   useEffect(() => {
-    getchats()
+     // Set up the real-time listener for the chat query
+     const chatQuery = query(useChatref, where('roomid', '==', room));
+     const unsubscribe = onSnapshot(chatQuery, snapshot => {
+       const chatlists = snapshot.docs.map(doc => {
+         const docData = doc.data();
+         if (docData.time) {
+           docData.time = docData.time.toDate();
+         } else {
+           docData.time = null;
+         }
+         return { id: doc.id, ...docData };
+       });
+ 
+       chatlists.sort((a, b) => a.time - b.time);
+       setfilterchat(chatlists);
+       console.log(filterchat);
+     });
+ 
+     // Clean up the listener when the component unmounts
+     return () => unsubscribe();
 
-    
-  })
+  },[room,relaod])
+
+
+  
 
 
 
@@ -72,27 +109,31 @@ const getchats = async()=>{
     setlist({
       roomid: room,
       message: e.target.value,
-      time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
-      sender:account
-      
+      time: new Date(),
+      sender: account
+
     })
-    
+
   }
-  const submitmessage = async(e) => {
+  const submitmessage = async (e) => {
+    setreload(true)
     e.preventDefault()
     console.log(filterchat)
-    await addDoc(useChatref,list).then(()=>{
+    await addDoc(useChatref, list).then(() => {
+      setreload(false)
       console.log("stored")
       $('#message-text').val('')
-      setlist({  roomid:"",
-      message:"",
-      time: "",
-      sender:""})
+      setlist({
+        roomid: "",
+        message: "",
+        time: "",
+        sender: ""
+      })
 
     })
-  
 
-   
+
+
 
   }
 
@@ -107,14 +148,16 @@ const getchats = async()=>{
 
       </div>
       <div className="chats">
-        {filterchat.map((e) => {
-          if(e.sender===account){
-            return <span className='right'><Messagebody message={e.message} time={e.time} /></span>
+        {filterchat.length!==0 && filterchat.map((e) => {
+          if (e.sender === account) {
+            return <span className='right'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} /></span>
 
           }
 
-          return <span className='left'><Messagebody message={e.message} time={e.time} /></span>
+          return <span className='left'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} /></span>
         })}
+
+        <div ref={messagesEndRef} />
 
       </div>
       <div className="message-bar">

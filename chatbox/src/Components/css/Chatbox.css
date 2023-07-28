@@ -7,8 +7,10 @@
 }
 .chats-components .title-bar{
           width:100%;
+          height: 10%;
           padding:10px;
           display:flex;
+          flex-direction: row;
           justify-content: space-between;
           background-color: rgb(4, 66, 107);
 }
@@ -18,6 +20,7 @@
 }
 .chats-components .message-bar{
           width:100%;
+          height: 10%;
           padding:10px;
           display:flex;
           justify-content: center;
@@ -56,7 +59,7 @@
 .chats-components .chats{
           width:100%;
           background: none;
-          flex: 1;
+          height: 80%;
           display: flex;
           flex-direction: column;
           overflow-y: scroll;

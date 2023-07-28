@@ -2,14 +2,14 @@
 
 import { auth, db } from './config'
 import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from "firebase/auth";
-import { addDoc, getDocs, collection,query,where,or } from 'firebase/firestore';
+import { addDoc, getDocs, collection, query, where, or, updateDoc , doc } from 'firebase/firestore';
 import Cookies from 'universal-cookie'
 import bcrypt from 'bcryptjs'
-
+import axios from 'axios'
 
 
 import './App.css';
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import $ from 'jquery'
 import "jquery-ui-dist/jquery-ui";
 import Chatbox from './Components/Chatbox';
@@ -24,7 +24,7 @@ function App() {
   const [userdet, setuserdet] = useState({ userid: "", name: "", number: "" })
   const [room, setroom] = useState({ id: "", member1: "", member2: "" })
   const [roomarr, setroomarr] = useState([])
-  const[loading,setloading]=useState(false)
+  const [loading, setloading] = useState(false)
 
   const [logstatus, setlogstatus] = useState(false)
   const [namereq, setnamereq] = useState(true)
@@ -61,7 +61,7 @@ function App() {
   }
 
 
-  
+
 
 
 
@@ -121,58 +121,69 @@ function App() {
 
 
   // it eill replace by room db and will be fetchd fro that
-  
+
 
 
   const login = async (e) => {
     e.preventDefault()
     var present = false;
+    var userid1 = null;
+    var user_changeRef = null
 
     await getDocs(usersRef).then((res) => {
-      
+
       res.forEach((doc) => {
-        if (doc.data().name === userdet.name) {
+        if (doc.data().number === userdet.number) {
 
           present = true
-        
+          userid1 = doc.id
+          console.log(userid1)
+          
+
         }
       })
+      user_changeRef = doc(db, "users", userid1);
 
-      
-     
+
+
     })
+    
+  
+ 
 
-    if(present===false){
-      console.log(userdet)
+    if (present === false) {
+      console.log(`${userdet.number} and ${present}`)
       await addDoc(usersRef, userdet)
       await setuserdet({ userid: "", name: "", number: "" })
-     
+
     }
-    else{
-      alert("username exists")
-     
+    else {
+      await alert("Do you want to Change your Username?")
+      updateDoc(user_changeRef,{name:userdet.name})
+
+
     }
-    
-    
+
+
     await setlogstatus(true)
     await $('#details-box,#chatbox').addClass('width')
     const salt = await bcrypt.genSaltSync(10)
-    const hash = await bcrypt.hashSync(mob,salt)
-    await cookie.set('logtoken',hash)
-    localStorage.setItem('upermitid',mob)
-   
-    
-
-
-    
+    const hash = await bcrypt.hashSync(mob, salt)
+    await cookie.set('logtoken', hash)
+    localStorage.setItem('upermitid', mob)
 
 
 
 
 
 
-    
-   
+
+
+
+
+
+
+
   }
   const [searchbar, setsearchbar] = useState(false)
 
@@ -182,7 +193,7 @@ function App() {
 
   }
 
-//add member inout value setup
+  //add member inout value setup
 
   const [newchat, addnewchat] = useState()
   const setnewchat = (e) => {
@@ -191,80 +202,80 @@ function App() {
 
   //add new member or group in chats
 
-  const addnewchats = async() => {
-    var check =false
+  const addnewchats = async () => {
+    var check = false
     var existence = false
 
 
 
-//user sexist or not
+    //user sexist or not
     await getDocs(usersRef).then((res) => {
-      
+
       res.forEach((doc) => {
-        if (doc.data().number === "+91"+newchat) {
-    
+        if (doc.data().number === "+91" + newchat) {
+
           existence = true
-        
+
         }
-        
-    
+
+
       })
     })
 
-//check wheather the user already in message list or not
-    await getDocs(useRoom).then(async(res) => {
+    //check wheather the user already in message list or not
+    await getDocs(useRoom).then(async (res) => {
 
-      
-      
-       res.forEach((doc) => {
-        if(doc.data().member2===mob && doc.data().member1===newchat){
+
+
+      res.forEach((doc) => {
+        if (doc.data().member2 === mob && doc.data().member1 === newchat) {
 
           check = true
           console.log("hochhe")
         }
-        
+
       })
-})
+    })
 
 
 
-//
-    if(check===false && existence===true){
-      await addDoc(useRoom,{member1:mob,member2:newchat})
-      console.log({member1:mob,member2:newchat})
+    //
+    if (check === false && existence === true) {
+      await addDoc(useRoom, { member1: mob, member2: newchat })
+      console.log({ member1: mob, member2: newchat })
       setsearchbar(false)
       addnewchat()
 
     }
-    if(check===false && existence===false){
+    if (check === false && existence === false) {
       alert("User not exist")
       setsearchbar(false)
       addnewchat()
     }
-    if(check===true && existence===true){
+    if (check === true && existence === true) {
       alert("already in your list")
       setsearchbar(false)
-      addnewchat() 
+      addnewchat()
     }
-// setsearchbar(false)
-//  addnewchat() 
+    // setsearchbar(false)
+    //  addnewchat() 
 
-   
-    
+
+
 
   }
 
 
 
 
-// log out user and back to home page or login page
+  // log out user and back to home page or login page
 
   const logout = async () => {
     cookie.remove('logtoken')
     const a = await signOut(auth)
     console.log(a)
     $('#details-box,#chatbox').removeClass('width')
-   
+
     await setlogstatus(false)
 
     await setnamereq(true)
@@ -274,115 +285,103 @@ function App() {
 
 
   }
-  const bring_detailsbox=()=>{
+  const bring_detailsbox = () => {
     $('#details-box').removeClass('none')
   }
 
 
-  const change_room = async(e) => {
-    if(e.member1===mob){
+  const change_room = async (e) => {
+    if (e.member1 === localStorage.getItem('upermitid')) {
       await setroom({
         id: e.id,
         member2: e.member2,
         member1: e.member1
-  
+
       })
-      
+
 
     }
-    
-    else{
+
+    else {
       await setroom({
         id: e.id,
         member2: e.member1,
         member1: e.member2
-  
+
       })
 
     }
-    if(window.innerWidth <= 500){
+    if (window.innerWidth <= 500) {
       $('#details-box').addClass('none')
-     
+
 
     }
-    
+
     console.log(room)
   }
 
+
+
   
+  const logcheck = async () => {
+    const checktk = await cookie.get('logtoken')
 
-  //useEfect functions
-  const logcheck =async()=>{
-    const checktk = await cookie.get('logtoken') 
-   
-    const getnumber=await localStorage.getItem('upermitid')
-     
-        if(checktk && getnumber){
-          await setlogstatus(true)
-          await setmob(getnumber)
-          $('#details-box,#chatbox').addClass('width')
-        }
-    
+    const getnumber = await localStorage.getItem('upermitid')
 
-    
-    
+    if (checktk && getnumber) {
+      await setlogstatus(true)
+      await setmob(getnumber)
+      $('#details-box,#chatbox').addClass('width')
+    }
 
 
 
+
+
+
+//useEfect functions
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     logcheck()
   })
-  
 
-  
 
-  useEffect(()=>{
-    
-  
-      
-      
-  
-      
-    
-   
 
-    if(mob!==undefined){
-      setloading(true)
-      var roomlist=[]
-     
-      const roomQuery = query(useRoom,or( where('member1','==',mob), where('member2','==',mob)))
-      getDocs(roomQuery).then((res) => {
-        res.forEach((doc)=>{
-          roomlist.push({...doc.data(),id:doc.id})
-  
+
+
+
+
+
+  useEffect(() => {
+    if (localStorage.getItem('upermitid') !== undefined) {
+
+
+
+      try {
+        console.log('vd')
+        const roomQuery = query(useRoom, or(where('member1', '==', localStorage.getItem('upermitid')), where('member2', '==', localStorage.getItem('upermitid'))))
+        getDocs(roomQuery).then((res) => {
+          const roomlists = res.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+          setroomarr(roomlists)
+          console.log(roomarr)
+
         })
-       
-        setroomarr(roomlist)
-       setloading(false)
-     
-      })
-      
-       
-      
+
+      } catch (error) {
+        console.log(error)
+
+      }
     }
-    return ()=>{
-      if(mob!==undefined){  const roomQuery = query(useRoom,or( where('member1','==',mob), where('member2','==',mob)))
-      getDocs(roomQuery)}
-    
-
-    }
-    
 
 
-    
-  },[mob,useRoom])
 
-  
+  }, [])
 
 
-  
+
+
+
   return (
     <div className="App">
       <div className="details-box" id='details-box'>
@@ -435,7 +434,7 @@ function App() {
 
               {
                 roomarr.map((e) => {
-                  if(e.member1===mob){
+                  if (e.member1 === mob) {
                     return <span key={e.id} onClick={() => change_room(e)}>{e.member2}</span>
                   }
                   return <span key={e.id} onClick={() => change_room(e)}>{e.member1}</span>
@@ -471,7 +470,7 @@ function App() {
 
             :
             <div className="chats"><Chatbox room={room.id} name={room.member2} account={room.member1} /></div>
-            
+
 
         }
 

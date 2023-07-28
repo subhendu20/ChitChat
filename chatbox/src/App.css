@@ -212,7 +212,7 @@ html{
 }
 .App .chatbox .chatroommessage{
   width:100%;
-  flex:1;
+  height: 100%;
   height: auto;
   display: flex;
   justify-content: center;
@@ -229,8 +229,8 @@ html{
 }
 .App .chatbox .chats{
   width:100%;
-  flex:1;
-  height: auto;
+  height: 100%;
+
   
 }
 .App .chatbox .top-chat-bar{
@@ -291,4 +291,9 @@ html{
   .App .details-box .details div.signin-addname{
     width:100%;
   }
+
+  .App .chatbox .chats{
+    height: 98%;
+  }
+  
 }
