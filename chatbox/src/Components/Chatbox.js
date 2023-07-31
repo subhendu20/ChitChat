@@ -25,7 +25,7 @@ function Chatbox({ room, name, account }) {
 
   useEffect(() => {
     scrollToBottom()
-  }, [room,relaod]);
+  }, [room,relaod,filterchat]);
 
 
 
