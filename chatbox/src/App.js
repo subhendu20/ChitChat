@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState } from 'react'
 import $ from 'jquery'
 import "jquery-ui-dist/jquery-ui";
 import Chatbox from './Components/Chatbox';
+import logo from './chitchat.png'
 
 function App() {
   //initializing cookies
@@ -164,13 +165,15 @@ function App() {
 
     }
 
+    await localStorage.setItem('upermitid', mob)
+
 
     await setlogstatus(true)
     await $('#details-box,#chatbox').addClass('width')
     const salt = await bcrypt.genSaltSync(10)
     const hash = await bcrypt.hashSync(mob, salt)
     await cookie.set('logtoken', hash)
-    localStorage.setItem('upermitid', mob)
+    
 
 
 
@@ -275,6 +278,7 @@ function App() {
     const a = await signOut(auth)
     console.log(a)
     $('#details-box,#chatbox').removeClass('width')
+    $('#pop-up-logout').addClass('none')
 
     await setlogstatus(false)
 
@@ -285,9 +289,7 @@ function App() {
 
 
   }
-  const bring_detailsbox = () => {
-    $('#details-box').removeClass('none')
-  }
+ 
 
 
   const change_room = async (e) => {
@@ -342,6 +344,11 @@ function App() {
 //useEfect functions
   }
 
+  const toggle_popup =async()=>{
+    $('#pop-up-logout').toggleClass('none')
+
+  }
+
   useEffect(()=>{
     let vh = window.innerHeight * 0.01;
   
@@ -365,7 +372,7 @@ function App() {
 
 
       try {
-        console.log('vd')
+      
         const roomQuery = query(useRoom, or(where('member1', '==', localStorage.getItem('upermitid')), where('member2', '==', localStorage.getItem('upermitid'))))
         getDocs(roomQuery).then((res) => {
           const roomlists = res.docs.map(doc => ({ id: doc.id, ...doc.data() }))
@@ -380,9 +387,9 @@ function App() {
       }
     }
 
+  
 
-
-  }, [])
+  }, [logstatus,searchbar])
 
 
 
@@ -390,18 +397,22 @@ function App() {
 
   return (
     <div className="App">
+      <div id="pop-up-logout" className='none'>
+        <p>Do you want to log out?</p>
+        <span><button id='log-out' onClick={logout}>Logout</button><button id='log-out-false' onClick={toggle_popup}>Cancel</button></span>
+      </div>
       <div className="details-box" id='details-box'>
         <nav className="nav">
-          <span className='logo'>LOGO</span>
+          <span className='logo'><img src={logo} alt="logo" /></span>
 
           {!logstatus ? <div></div>
             :
             <div className="navbuttons">
 
-              {searchbar ? <span className='newchatadd'><input type="text" placeholder='search' id='addchat' name='member' onChange={setnewchat} /><button onClick={addnewchats}> Add</button></span> :
-                <p><i class='bx bxs-message-add' onClick={opensearch}></i></p>}
-              <p>menu</p>
-              <p className='signout' onClick={logout}>sign out</p>
+              {searchbar ? <span className='newchatadd'><input type="text" placeholder='search' id='addchat' name='member' onChange={setnewchat} /><button onClick={addnewchats}><i class='bx bxs-message-add'></i></button></span> :
+                <p  onClick={opensearch}><i class='bx bxs-message-add'></i>Add new</p>}
+              
+              <p className='signout' onClick={toggle_popup}>sign out</p>
             </div>}
 
 
@@ -434,6 +445,10 @@ function App() {
 
               </span>
 
+              <span id="message">
+                Lorem ipsum dolor sit amet consectetur,Lorem, ipsum dolor sit amet consectetur adipisicing elit. In libero laborum placeat accusantium, laboriosam repudiandae dignissimos exercitationem sint praesentium molestiae dolores adipisci aut distinctio atque sequi quasi? Natus voluptatum dicta iste vel sequi dolore labore harum quisquam, esse veniam inventore atque excepturi quo dolorum architecto nam earum corporis. Odit doloribus sit atque asperiores amet quaerat. adipisicing elit. Consectetur aspernatur cumque voluptatibus cum illum molestias et doloribus omnis eos labore quo magnam ipsum itaque sapiente consequatur sint deserunt quam, dignissimos vel! Illum, facere quia?
+              </span>
+
 
             </div> :
             <div className="chatdetails">
@@ -464,14 +479,12 @@ function App() {
 
       </div>
       <div className="chatbox" id='chatbox'>
-        <div className="top-chat-bar">
-          <span onClick={bring_detailsbox}>Back</span>
-        </div>
+        
 
         {
-          (roomarr.length === 0) ? <div className="chatroommessage">
-            <p>Star Your Chat</p>
-            <p className="b">ChatBox</p>
+          (roomarr.length === 0 || room.id==='') ? <div className="chatroommessage">
+            <p>Star Your Chat with</p>
+            <p className="b">Chitchat</p>
           </div>
 
             :

@@ -11,12 +11,13 @@
           padding:10px;
           display:flex;
           flex-direction: row;
-          justify-content: space-between;
+          align-items: center;
+          justify-content: space-between!important;
           background-color: rgb(4, 66, 107);
 }
 .chats-components .title-bar span{
           color:white;
-          font-size: 20px;
+          font-size: 25px;
 }
 .chats-components .message-bar{
           width:100%;
@@ -42,7 +43,10 @@
           border-radius: 10px;
           padding:0px 10px;
           color:black;
-          font-size: 20px;
+          font-size: 15px;
+}
+.chats-components .message-bar form input::placeholder{
+          font-size: 15px;
 }
 .chats-components .message-bar form button{
           border-radius: 50%;
@@ -85,5 +89,51 @@
           margin-left: 60%;
           padding: 0px 10px;
          
+
+}
+.top-chat-bar{
+          width: 100%;
+          padding: 5px;
+          font-size: 10px;
+          color: grey;
+          background-color: rgb(4, 66, 107);
+          display: none;
+        }
+@media (max-width:500px){
+          .chats-components .title-bar span{
+                    font-size: 15px;
+          }
+          .chats-components .message-bar form input::placeholder{
+                    font-size: 15px;
+          }
+          .chats-components .message-bar form input{
+                    font-size: 15px;
+                    width: 80%;
+                    padding: 5px!important;
+                    border-radius: 5px;
+          }
+          .chats-components .message-bar form button i{
+                    font-size: 15px;
+                    padding: 10px;
+          }
+          .top-chat-bar{
+
+                    display: flex;
+                    font-size: 10px;
+                    justify-content: flex-end;
+                    align-items: center;
+                  }
+
+          .chats-components .title-bar{
+                    height: 8%;
+                    border: 1px black solid;
+          
+          }
+          .chats-components .message-bar{
+                    height: 8%;
+          }
+          .chats-components .chats{
+                    height: 85%;
+          }
 
 }

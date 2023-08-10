@@ -22,6 +22,9 @@ function Chatbox({ room, name, account }) {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
+  const bring_detailsbox = () => {
+    $('#details-box').removeClass('none')
+  }
 
   useEffect(() => {
     scrollToBottom()
@@ -144,7 +147,9 @@ function Chatbox({ room, name, account }) {
     <div className='chats-components'>
       <div className="title-bar">
         <span>{name}</span>
-        <span></span>
+        <span className="top-chat-bar" onClick={bring_detailsbox}>
+        <i class='bx bx-arrow-back'></i>Back
+        </span>
 
       </div>
       <div className="chats">
@@ -162,7 +167,7 @@ function Chatbox({ room, name, account }) {
       </div>
       <div className="message-bar">
         <form action="" className="message-form">
-          <input type="text" id='message-text' name="message" onChange={change} />
+          <input type="text" id='message-text' name="message" onChange={change} placeholder='Type message' />
           <button type='submit' onClick={submitmessage}><i class='bx bx-send'></i></button>
         </form>
 
