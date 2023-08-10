@@ -39,14 +39,14 @@ function App() {
   const [mob, setmob] = useState()
   const [logobject, setlogobject] = useState("")
   const enter_mobile = (e) => {
-    console.log(mob)
+    
     setmob(e.target.value)
 
   }
 
   const [otp, setotp] = useState()
   const enter_otp = (e) => {
-    console.log(otp)
+    
     setotp(e.target.value)
 
   }
@@ -73,10 +73,10 @@ function App() {
     );
     recaptchaVerifier.render()
     return signInWithPhoneNumber(auth, "+91 " + mob, recaptchaVerifier).then((res) => {
-      console.log(res)
+    
       setlogobject(res)
     }).catch((e) => {
-      console.log(e)
+      
     })
   }
 
@@ -86,7 +86,7 @@ function App() {
 
   const captchaverify = async (e) => {
 
-    console.log("clicking")
+    
     e.preventDefault()
     const res = await setcaptcha(mob)
 
@@ -106,9 +106,9 @@ function App() {
         number: response.user.phoneNumber,
 
       })
-      console.log(response)
+  
     }).catch((e) => {
-      console.log(e)
+    
     })
     setnamereq(false)
   }
@@ -138,7 +138,7 @@ function App() {
 
           present = true
           userid1 = doc.id
-          console.log(userid1)
+          
           
 
         }
@@ -153,7 +153,7 @@ function App() {
  
 
     if (present === false) {
-      console.log(`${userdet.number} and ${present}`)
+      
       await addDoc(usersRef, userdet)
       await setuserdet({ userid: "", name: "", number: "" })
 
@@ -234,11 +234,11 @@ function App() {
         if (doc.data().member2 === mob && doc.data().member1 === newchat) {
 
           check = true
-          console.log("hochhe")
+        
         }
         if(doc.data().member1 === mob && doc.data().member2 === newchat){
           check = true
-          console.log("hochhe")
+        
 
         }
 
@@ -250,7 +250,7 @@ function App() {
     //
     if (check === false && existence === true) {
       await addDoc(useRoom, { member1: mob, member2: newchat })
-      console.log({ member1: mob, member2: newchat })
+      
       setsearchbar(false)
       addnewchat()
 
@@ -281,7 +281,7 @@ function App() {
   const logout = async () => {
     cookie.remove('logtoken')
     const a = await signOut(auth)
-    console.log(a)
+  
     $('#details-box,#chatbox').removeClass('width')
     $('#pop-up-logout').addClass('none')
 
@@ -324,7 +324,7 @@ function App() {
 
     }
 
-    console.log(room)
+  
   }
 
 
@@ -382,12 +382,12 @@ function App() {
         getDocs(roomQuery).then((res) => {
           const roomlists = res.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           setroomarr(roomlists)
-          console.log(roomarr)
+          
 
         })
 
       } catch (error) {
-        console.log(error)
+      
 
       }
     }

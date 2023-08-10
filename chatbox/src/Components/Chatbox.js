@@ -93,7 +93,7 @@ function Chatbox({ room, name, account }) {
  
        chatlists.sort((a, b) => a.time - b.time);
        setfilterchat(chatlists);
-       console.log(filterchat);
+       
      });
  
      // Clean up the listener when the component unmounts
@@ -121,10 +121,10 @@ function Chatbox({ room, name, account }) {
   const submitmessage = async (e) => {
     setreload(true)
     e.preventDefault()
-    console.log(filterchat)
+  
     await addDoc(useChatref, list).then(() => {
       setreload(false)
-      console.log("stored")
+    
       $('#message-text').val('')
       setlist({
         roomid: "",
