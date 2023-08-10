@@ -236,6 +236,11 @@ function App() {
           check = true
           console.log("hochhe")
         }
+        if(doc.data().member1 === mob && doc.data().member2 === newchat){
+          check = true
+          console.log("hochhe")
+
+        }
 
       })
     })
@@ -446,7 +451,11 @@ function App() {
               </span>
 
               <span id="message">
-                Lorem ipsum dolor sit amet consectetur,Lorem, ipsum dolor sit amet consectetur adipisicing elit. In libero laborum placeat accusantium, laboriosam repudiandae dignissimos exercitationem sint praesentium molestiae dolores adipisci aut distinctio atque sequi quasi? Natus voluptatum dicta iste vel sequi dolore labore harum quisquam, esse veniam inventore atque excepturi quo dolorum architecto nam earum corporis. Odit doloribus sit atque asperiores amet quaerat. adipisicing elit. Consectetur aspernatur cumque voluptatibus cum illum molestias et doloribus omnis eos labore quo magnam ipsum itaque sapiente consequatur sint deserunt quam, dignissimos vel! Illum, facere quia?
+                <p>Chit-chat is a messaging app where you can send message to other user.Chatchat built with encryption system which provide extra security to your data.
+                </p>
+                <p>1. Enter your mobile number and otp</p>
+                <p>2. Enter your name</p>
+                <p>3. Click on the add new on navigation bar to add new chat and enter the mobike number you want to add.</p>
               </span>
 
 
