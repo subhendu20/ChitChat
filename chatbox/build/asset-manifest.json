@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.36e4d779.css",
+    "main.js": "/static/js/main.f1229bb9.js",
+    "static/js/787.2b8a1820.chunk.js": "/static/js/787.2b8a1820.chunk.js",
+    "static/media/peakpx (1).jpg": "/static/media/peakpx (1).926f35418686219f3667.jpg",
+    "static/media/chitchat.png": "/static/media/chitchat.ecfe88e5bf67ea502751.png",
+    "static/media/Whatsapp Message - Sent - Sound.mp3": "/static/media/Whatsapp Message - Sent - Sound.f58358e1367f39329d81.mp3",
+    "index.html": "/index.html",
+    "main.36e4d779.css.map": "/static/css/main.36e4d779.css.map",
+    "main.f1229bb9.js.map": "/static/js/main.f1229bb9.js.map",
+    "787.2b8a1820.chunk.js.map": "/static/js/787.2b8a1820.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.36e4d779.css",
+    "static/js/main.f1229bb9.js"
+  ]
+}
