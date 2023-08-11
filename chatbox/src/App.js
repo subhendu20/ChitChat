@@ -29,6 +29,7 @@ function App() {
 
   const [logstatus, setlogstatus] = useState(false)
   const [namereq, setnamereq] = useState(true)
+  const[otpstatus,setotpstatus]=useState(true)
 
 
 
@@ -48,6 +49,7 @@ function App() {
   const enter_otp = (e) => {
     
     setotp(e.target.value)
+    setotpstatus(false)
 
   }
 
@@ -143,7 +145,13 @@ function App() {
 
         }
       })
-      user_changeRef = doc(db, "users", userid1);
+
+      if(present){
+        user_changeRef = doc(db, "users", userid1);
+      console.log(present)
+
+      }
+      
 
 
 
@@ -153,12 +161,14 @@ function App() {
  
 
     if (present === false) {
+      console.log(present)
       
       await addDoc(usersRef, userdet)
-      await setuserdet({ userid: "", name: "", number: "" })
+      
 
     }
     else {
+      console.log(present)
       await alert("Do you want to Change your Username?")
       updateDoc(user_changeRef,{name:userdet.name})
 
@@ -414,8 +424,8 @@ function App() {
             :
             <div className="navbuttons">
 
-              {searchbar ? <span className='newchatadd'><input type="text" placeholder='search' id='addchat' name='member' onChange={setnewchat} /><button onClick={addnewchats}><i class='bx bxs-message-add'></i></button></span> :
-                <p  onClick={opensearch}><i class='bx bxs-message-add'></i>Add new</p>}
+              {searchbar ? <span className='newchatadd'><input type="text" placeholder='search' id='addchat' name='member' onChange={setnewchat} /><button onClick={addnewchats}><i className='bx bxs-message-add'></i></button></span> :
+                <p  onClick={opensearch}><i className='bx bxs-message-add'></i>Add new</p>}
               
               <p className='signout' onClick={toggle_popup}>sign out</p>
             </div>}
@@ -428,7 +438,7 @@ function App() {
 
               <span className="signin">
                 <form className="logform" >
-                  {namereq ? <div id='recaptcha-container'></div> : <div></div>}
+                  {otpstatus ? <div><div id='recaptcha-container'></div></div> :<div></div>}
                   {
                     namereq ? <input type="number" className="monile" placeholder='Mobile number' onChange={enter_mobile} /> : <input type="text" className="name" placeholder='username' onChange={setname} />
 
@@ -455,7 +465,8 @@ function App() {
                 </p>
                 <p>1. Enter your mobile number and otp</p>
                 <p>2. Enter your name</p>
-                <p>3. Click on the add new on navigation bar to add new chat and enter the mobike number you want to add.</p>
+                <p>3. Click on the add new on navigation bar to add new chat and enter the mobile number that you want to add.</p>
+                <p>*important - If you get an otp then don't click on 'I am not robot' again. </p>
               </span>
 
 

@@ -126,14 +126,14 @@
 
           .chats-components .title-bar{
                     height: 8%;
-                    border: 1px black solid;
+                    
           
           }
           .chats-components .message-bar{
                     height: 8%;
           }
           .chats-components .chats{
-                    height: 85%;
+                    height: 84%;
           }
 
 }

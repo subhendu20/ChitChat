@@ -11,20 +11,37 @@ import sound from './css/Whatsapp Message - Sent - Sound.mp3'
 
 function Chatbox({ room, name, account }) {
   const [filterchat, setfilterchat] = useState([])
-  const[relaod,setreload]=useState(false)
+  
+  
+  const[relaod,setreload]=useState(0)
   const[audio,setaudio]= useState({
     ting:new Audio(sound)
   })
+  const[chatclear,setchatclear]=useState(false)
   const messagesEndRef = useRef(null)
 
   const useChatref = collection(db, 'Chats')
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
   }
   const bring_detailsbox = () => {
     $('#details-box').removeClass('none')
   }
+
+  var messagelength=$('.right').length
+  const [list, setlist] = useState({
+    roomid: "",
+    message: "",
+    time: "",
+    sender: ""
+  })
+
+  
+
+
+
+
 
   useEffect(() => {
     scrollToBottom()
@@ -38,12 +55,7 @@ function Chatbox({ room, name, account }) {
   // all usefull states
 
 
-  const [list, setlist] = useState({
-    roomid: "",
-    message: "",
-    time: "",
-    sender: ""
-  })
+  
 
 
   
@@ -78,6 +90,9 @@ function Chatbox({ room, name, account }) {
 
   // useeffects
   useEffect(() => {
+    setchatclear(true)
+    
+   
      // Set up the real-time listener for the chat query
      const chatQuery = query(useChatref, where('roomid', '==', room));
      const unsubscribe = onSnapshot(chatQuery, snapshot => {
@@ -93,16 +108,27 @@ function Chatbox({ room, name, account }) {
  
        chatlists.sort((a, b) => a.time - b.time);
        setfilterchat(chatlists);
+      
+       
+       setchatclear(false)
        
      });
  
      // Clean up the listener when the component unmounts
      return () => unsubscribe();
 
-  },[room,relaod])
+  },[room])
 
 
   
+  // useEffect(()=>{
+  //   var len = filterchat.length
+  //   if(filterchat[len-1].sender!== account){
+  //     audio.ting.play()
+
+  //   }
+
+  // },[filterchat.length])
 
 
 
@@ -119,11 +145,13 @@ function Chatbox({ room, name, account }) {
 
   }
   const submitmessage = async (e) => {
-    setreload(true)
+
+    
+    
     e.preventDefault()
   
     await addDoc(useChatref, list).then(() => {
-      setreload(false)
+      setreload(relaod+1)
     
       $('#message-text').val('')
       setlist({
@@ -148,19 +176,20 @@ function Chatbox({ room, name, account }) {
       <div className="title-bar">
         <span>{name}</span>
         <span className="top-chat-bar" onClick={bring_detailsbox}>
-        <i class='bx bx-arrow-back'></i>Back
+        <i className='bx bx-arrow-back'></i>Back
         </span>
 
       </div>
       <div className="chats">
-        {filterchat.length!==0 && filterchat.map((e) => {
+        {filterchat.length!==0 && !chatclear  && filterchat.map((e) => {
           if (e.sender === account) {
-            return <span className='right'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} /></span>
+            return <span key={e.id} className='right'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} date={e.time.toString().slice(4,15)} /></span>
 
           }
 
-          return <span className='left'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} /></span>
+          return <span key={e.id} className='left'><Messagebody message={e.message} time={e.time.toString().slice(15,21)} key={e.id} date={e.time.toString().slice(4,15)}/></span>
         })}
+        
 
         <div ref={messagesEndRef} />
 
@@ -168,7 +197,7 @@ function Chatbox({ room, name, account }) {
       <div className="message-bar">
         <form action="" className="message-form">
           <input type="text" id='message-text' name="message" onChange={change} placeholder='Type message' />
-          <button type='submit' onClick={submitmessage}><i class='bx bx-send'></i></button>
+          <button type='submit' onClick={submitmessage}><i className='bx bx-send'></i></button>
         </form>
 
       </div>

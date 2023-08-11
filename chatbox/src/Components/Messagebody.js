@@ -1,7 +1,7 @@
 import React from 'react'
 import './css/Messagebody.css'
 
-function Messagebody({message,time}) {
+function Messagebody({message,time,date}) {
   return (
     <div className='message-body-main'>
           <span className="message-body">
@@ -9,7 +9,7 @@ function Messagebody({message,time}) {
 
           </span>
           <span className="time">
-                    {time}
+                    {date}  {time}
 
           </span>
       
