@@ -461,11 +461,11 @@ function App() {
               </span>
 
               <span id="message">
-                <p>Chit-chat is a messaging app where you can send message to other user.Chatchat built with encryption system which provide extra security to your data.
+                <p>Chit-chat is a messaging app where you can send message to other user.
                 </p>
                 <p>1. Enter your mobile number and otp</p>
                 <p>2. Enter your name</p>
-                <p>3. Click on the add new on navigation bar to add new chat and enter the mobile number that you want to add.</p>
+                <p>3. Click on the add new (Navigation bar)to add new chat and enter the mobile number that you want to add.</p>
                 <p>*important - If you get an otp then don't click on 'I am not robot' again. </p>
               </span>
 

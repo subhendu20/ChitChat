@@ -4,12 +4,12 @@ import {getFirestore} from 'firebase/firestore'
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDY0ZP_lCNd-pwAZLLBuWd-fh0WzIr7mjo",
-  authDomain: "chatbox2-32838.firebaseapp.com",
-  projectId: "chatbox2-32838",
-  storageBucket: "chatbox2-32838.appspot.com",
-  messagingSenderId: "215153446381",
-  appId: "1:215153446381:web:627c7581488a1715cd6be4"
+  apiKey: "AIzaSyCj27Xu0Qk_xUkGq_7qyZZj5hm-x8x1Zg4",
+  authDomain: "newchatbox-7e3e5.firebaseapp.com",
+  projectId: "newchatbox-7e3e5",
+  storageBucket: "newchatbox-7e3e5.appspot.com",
+  messagingSenderId: "82348991797",
+  appId: "1:82348991797:web:02a6219a5ce473be88187c"
 };
 
 
