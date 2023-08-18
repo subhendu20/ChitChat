@@ -23,7 +23,7 @@ Tech Stack:
 Frontend: React with functional components and hooks for state management.
 Backend: Firebase Realtime Database for real-time messaging and data storage.
 Authentication: Firebase Authentication for secure user sign-up and login.
-Hosting: Firebase Hosting for deploying and serving the app.
+Hosting: Netlify Hosting for deploying and serving the app.
 
 
 Usage:
