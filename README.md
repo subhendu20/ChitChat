@@ -1,5 +1,5 @@
 # ChitChat
-Chitchat -  chitchat is a chat app where  users can send messages to other user and vice-versa.
+Chitchat -  chitchat is a chat app where  users can send messages to other user.
 
 
 Git Description: React Firebase Chatting App
